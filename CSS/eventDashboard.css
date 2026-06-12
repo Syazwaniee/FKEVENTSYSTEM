@@ -1,0 +1,14 @@
+.chart-card {
+    background: white;
+    border-radius: 24px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    height: 100%;
+}
+.chart-card h3 
+{ 
+    font-size: 1.2rem; 
+    margin-bottom: 1rem; 
+    border-left: 4px solid #6d28ff; 
+    padding-left: 0.75rem; 
+}
