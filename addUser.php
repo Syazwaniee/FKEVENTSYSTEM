@@ -215,9 +215,9 @@ include 'INCLUDE/db.php';
                                     Select Club
                                 </option>
                                 <?php
-                                $clubs = getClubs();
-                                if ($clubs && $clubs->num_rows > 0) {
-                                    while ($row = $clubs->fetch_assoc()) {
+                                $club = getClubs();
+                                if ($club && $club->num_rows > 0) {
+                                    while ($row = $club->fetch_assoc()) {
                                 ?>
                                         <option value="<?= htmlspecialchars($row['Club_id']); ?>" <?= (isset($_POST['club_id']) && $_POST['club_id'] == $row['Club_id']) ? 'selected' : '' ?>>
                                             <?= htmlspecialchars($row['Club_name']); ?>

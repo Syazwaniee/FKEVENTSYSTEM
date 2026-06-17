@@ -69,9 +69,9 @@ function insertUser(
 
         // ================= INSERT COMMITTEE AND CLUB MEMBER =================
         if (strtolower($role) === "committee" && !empty($club_id) && !empty($committee_role_id)) {
-            // Insert into clubcommitee table
+            // Insert into clubcommittee table
             $stmt_committee = $conn->prepare(
-                "INSERT INTO clubcommitee
+                "INSERT INTO clubcommittee
                 (
                     User_id,
                     Club_id,
@@ -525,7 +525,7 @@ function deleteUser(int $userId): array
 
     try {
         $related = [
-            ['clubcommitee', 'User_id'],
+            ['clubcommittee', 'User_id'],
             ['clubmember', 'User_id'],
         ];
 
@@ -586,7 +586,7 @@ function deleteClub(int $clubId): array
 
     try {
         $related = [
-            ['clubcommitee', 'Club_id'],
+            ['clubcommittee', 'Club_id'],
             ['clubmember', 'Club_id'],
         ];
 
@@ -634,7 +634,7 @@ function getAssignedRoles()
 {
     global $conn;
 
-    $sql = "SELECT Committee_role_id, position AS Role_name FROM commiteerole ORDER BY position ASC";
+    $sql = "SELECT Committee_role_id, position AS Role_name FROM committee_role ORDER BY position ASC";
     $result = $conn->query($sql);
 
     return $result;
@@ -691,7 +691,7 @@ function assignClubCommittee(int $userId, int $clubId, int $committeeRoleId, str
     }
 
     $stmt = $conn->prepare(
-        'SELECT 1 FROM clubcommitee WHERE User_id = ? AND Club_id = ? LIMIT 1'
+        'SELECT 1 FROM clubcommittee WHERE User_id = ? AND Club_id = ? LIMIT 1'
     );
     if (!$stmt) {
         return ['success' => false, 'message' => 'Database error: ' . $conn->error];
@@ -711,7 +711,7 @@ function assignClubCommittee(int $userId, int $clubId, int $committeeRoleId, str
 
     try {
         $stmt = $conn->prepare(
-            'INSERT INTO clubcommitee (User_id, Club_id, Committee_role_id, Assigned_date) VALUES (?, ?, ?, ?)'
+            'INSERT INTO clubcommittee (User_id, Club_id, Committee_role_id, Assigned_date) VALUES (?, ?, ?, ?)'
         );
         if (!$stmt) {
             throw new Exception('Prepare failed (committee): ' . $conn->error);
@@ -778,9 +778,9 @@ function getCommitteeClubForUser(int $userId): ?array
 
     $stmt = $conn->prepare(
         'SELECT c.*, cc.Assigned_date, cr.position AS Role_name
-         FROM clubcommitee cc
+         FROM clubcommittee cc
          INNER JOIN club c ON cc.Club_id = c.Club_id
-         LEFT JOIN commiteerole cr ON cc.Committee_role_id = cr.Committee_role_id
+         LEFT JOIN committee_role cr ON cc.Committee_role_id = cr.Committee_role_id
          WHERE cc.User_id = ?
          ORDER BY cc.Assigned_date DESC
          LIMIT 1'
@@ -1124,10 +1124,10 @@ function getClubCommitteeAssignments(): array
             u.Student_id,
             c.Club_name,
             cr.position AS Role_name
-        FROM clubcommitee cc
+        FROM clubcommittee cc
         INNER JOIN user u ON cc.User_id = u.User_id
         INNER JOIN club c ON cc.Club_id = c.Club_id
-        INNER JOIN commiteerole cr ON cc.Committee_role_id = cr.Committee_role_id
+        INNER JOIN committee_role cr ON cc.Committee_role_id = cr.Committee_role_id
         ORDER BY cc.Assigned_date DESC, c.Club_name ASC, u.FullName ASC
     ";
 
@@ -1159,7 +1159,7 @@ function getClubCommitteeById(int $clubCommitteeId): ?array
 
     $stmt = $conn->prepare(
         'SELECT Club_committee_id, User_id, Club_id, Committee_role_id, Assigned_date
-         FROM clubcommitee WHERE Club_committee_id = ? LIMIT 1'
+         FROM clubcommittee WHERE Club_committee_id = ? LIMIT 1'
     );
     if (!$stmt) {
         return null;
@@ -1203,7 +1203,7 @@ function updateClubCommittee(
     }
 
     $stmt = $conn->prepare(
-        'SELECT 1 FROM clubcommitee
+        'SELECT 1 FROM clubcommittee
          WHERE User_id = ? AND Club_id = ? AND Club_committee_id <> ? LIMIT 1'
     );
     if (!$stmt) {
@@ -1227,7 +1227,7 @@ function updateClubCommittee(
 
     try {
         $stmt = $conn->prepare(
-            'UPDATE clubcommitee
+            'UPDATE clubcommittee
              SET User_id = ?, Club_id = ?, Committee_role_id = ?, Assigned_date = ?
              WHERE Club_committee_id = ?'
         );
@@ -1298,7 +1298,7 @@ function deleteClubCommittee(int $clubCommitteeId): array
 
     try {
         $stmt = $conn->prepare(
-            'DELETE FROM clubcommitee WHERE Club_committee_id = ?'
+            'DELETE FROM clubcommittee WHERE Club_committee_id = ?'
         );
         if (!$stmt) {
             throw new Exception('Prepare failed: ' . $conn->error);
@@ -2376,10 +2376,10 @@ function profile($conn, $user_id)
 
             FROM clubcommittee cc
 
-            LEFT JOIN clubs c
+            LEFT JOIN club c
                 ON cc.Club_id = c.Club_id
 
-            LEFT JOIN committee_roles cr
+            LEFT JOIN committee_role cr
                 ON cc.Committee_role_id =
                 cr.Committee_role_id
 
@@ -2429,7 +2429,7 @@ function profile($conn, $user_id)
 
         FROM clubmember cm
 
-        LEFT JOIN clubs c
+        LEFT JOIN club c
             ON cm.Club_id = c.Club_id
 
         WHERE cm.User_id = ?
@@ -2540,10 +2540,10 @@ function editProfile($conn, $user_id, $data, $file = null)
 
         FROM clubcommittee cc
 
-        LEFT JOIN clubs c
+        LEFT JOIN club c
             ON cc.Club_id = c.Club_id
 
-        LEFT JOIN committee_roles cr
+        LEFT JOIN committee_role cr
             ON cc.Committee_role_id =
             cr.Committee_role_id
 

@@ -9,7 +9,7 @@ if (!isset($navBase)) {
     <!-- ================= LEFT ================= -->
     <div class="admin-nav-left">
 
-        <a href="<?= htmlspecialchars($navBase) ?>../Module1/student.php">
+        <a href="/FKEVENTSYSTEM/Module1/student.php">
 
             <i class="bi bi-code-slash"></i>
 
@@ -112,20 +112,15 @@ if (!isset($navBase)) {
                 </div>
 
                 <!-- PROFILE -->
-                <a href="<?= htmlspecialchars($navBase) ?>../Module1/profile.php">
-
+                <a href="/FKEVENTSYSTEM/Module1/profile.php">
                     <i class="bi bi-person-circle"></i>
                     View Profile
-
                 </a>
 
-                <!-- LOGOUT -->
-                <a href="<?= htmlspecialchars($navBase) ?>../Module1/login.php"
+                <a href="/FKEVENTSYSTEM/Module1/login.php"
                     class="admin-logout-btn">
-
                     <i class="bi bi-box-arrow-right"></i>
                     Sign Out
-
                 </a>
 
             </div>

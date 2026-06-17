@@ -51,7 +51,7 @@
         }
     } else {
         // Not logged in, redirect?
-        echo "<script>window.location.href='../Module1/login.php';</script>";
+        header("Location: login.php");
         exit;
     }
 
@@ -115,14 +115,15 @@
             <div class="profile-left">
 
                 <!-- PROFILE IMAGE -->
-                <div class="profile-image">
+                <div class="profile-image" style="width:206px; height:250px; display:flex; align-items:center; justify-content:center;">
                     <?php if (!empty($profile['Profile_photo'])):
                         $photoPath = normalizeProfilePhotoPath($profile['Profile_photo']); ?>
                         <img src="<?= htmlspecialchars($photoPath) ?>" alt="Profile Photo" style="width:206px;height:250px;border-radius:50%;object-fit:cover;">
                     <?php else: ?>
-                        <i class="bi bi-person-fill"></i>
+                        <i class="bi bi-person-fill" style="font-size:180px; width:206px; height:250px; line-height:250px; color:#c4c4c4; display:block; text-align:center; border-radius:50%; background:#f0f0f0;"></i>
                     <?php endif; ?>
                 </div>
+
 
                 <!-- NAME -->
                 <h3>
@@ -224,7 +225,7 @@
 
 
                     <!-- CHANGE PASSWORD -->
-                    <a href="../Module1/change.php" class="change-password-btn">
+                    <a href="/FKEVENTSYSTEM/Module1/change.php" class="change-password-btn">
                         <i class="bi bi-key-fill"></i>
                         Change Password
                     </a>

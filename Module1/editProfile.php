@@ -274,7 +274,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
 
                                 if (isset($user['User_id'])) {
                                     // Query clubcommittee
-                                    $stmt = $conn->prepare("SELECT club_id, Committee_role_id FROM clubcommitee WHERE User_id = ?");
+                                    $stmt = $conn->prepare("SELECT club_id, Committee_role_id FROM clubcommittee WHERE User_id = ?");
                                     if ($stmt) {
                                         $stmt->bind_param("i", $user['User_id']);
                                         $stmt->execute();
@@ -283,7 +283,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
                                             $stmt->close();
 
                                             // Query club name
-                                            $stmt2 = $conn->prepare("SELECT Club_name FROM club WHERE club_id = ?");
+                                            $stmt2 = $conn->prepare("SELECT Club_name FROM club WHERE Club_id = ?");
                                             if ($stmt2) {
                                                 $stmt2->bind_param("i", $club_id);
                                                 $stmt2->execute();
@@ -295,7 +295,7 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
                                             }
 
                                             // Query committee role name
-                                            $stmt3 = $conn->prepare("SELECT Role_name FROM commiteerole WHERE Committee_role_id = ?");
+                                            $stmt3 = $conn->prepare("SELECT Role_name FROM committee_role WHERE Committee_role_id = ?");
                                             if ($stmt3) {
                                                 $stmt3->bind_param("i", $committee_role_id);
                                                 $stmt3->execute();

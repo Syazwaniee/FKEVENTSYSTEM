@@ -1,7 +1,5 @@
 <?php
-/**
- * Legacy login URL — use the main login at /Module1/Login.php
- */
+
 $query = $_SERVER['QUERY_STRING'] ?? '';
 $target = '../login.php' . ($query !== '' ? '?' . $query : '');
 
@@ -17,8 +15,8 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') === 'POST') {
         if ($result['success'] && !empty($result['redirect'])) {
             $_SESSION['user'] = $result['user'];
             $_SESSION['user']['role'] = strtolower((string) $_SESSION['user']['role']);
-            $dest = preg_replace('#^Module1/#', '', $result['redirect']);
-            header('Location: ' . $dest);
+            // $dest = preg_replace('#^Module1/#', '', $result['redirect']);
+            header('Location: ' . $result['redirect']);
             exit;
         }
     }
